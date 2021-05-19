@@ -3,8 +3,22 @@ import mariadb as mysqldb
 import paho.mqtt.client as mqtt
 import ssl
 
-mysqldb_connection = mysqldb.connect(user='t_admin', password='tealesg1', database='iotdb')
-cursor = mysqldb_connection.cursor()
+try:
+  mysqldb_connection = mysqldb.connect(
+    user='t_admin', 
+    password='tealesg1', 
+    database='iotdb',
+    port=3307,
+    host="127.0.0.1"
+    )
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB Platform: {e}")
+    sys.exit(1)
+
+cur = mysqldb_connection.cursor()
+
+#mysqldb_connection = mysqldb.connect(user='t_admin', password='tealesg1', database='iotdb')
+#cursor = mysqldb_connection.cursor()
 
 # MQTT Settings 
 MQTT_Broker = "asia.srv.sindconiot.com"
